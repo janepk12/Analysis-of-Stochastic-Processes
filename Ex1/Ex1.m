@@ -77,7 +77,7 @@ moving_mean2 = [];
 moving_std1 = [];
 moving_std2 = [];
 count = 0;
-stepsize = 50;
+stepsize = 10;
 
 if length(task2_1) == length(task2_1)
     obs_len = length(task2_2);
@@ -120,8 +120,7 @@ figure(5)
 hold on;
 plot(moving_std1);
 plot(moving_std2);
-std_tit = fprintf('Moving standard deviations for strides of %.1',stepsize);
-title(std_tit);
+title('Moving standard deviations for strides of 10');
 legend('Stepwise mean of observations - Task2.1', 'Stepwise mean of observations - Task2.2');
 hold off;
 
