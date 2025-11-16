@@ -18,6 +18,7 @@ hold on
 plot(t, y2, '.-')
 xlabel('t [s]')
 ylabel('y')
+legend('y2', 'y1')
 
 % xcorr means we consider equally spaced time measurements of both time series
 [xcf, lags] = xcorr(y1, y2, 'normalized'); 
