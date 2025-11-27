@@ -39,8 +39,8 @@ ylabel('Cross-corellation value')
 title('Correllation function plot')
 
 freq_est = length(t_tls) / max(t_tls) % 1/s
-s_from_freq_est = 1/freq_est % s
-total_shift_s = shift_samples * s_from_freq_est
+s_from_freq_est = 1/freq_est; % s
+total_shift_s = shift_samples * s_from_freq_est;
 sprintf('integer Shift until maximum corellation: %.i\n\ntime-adjusted shift until maximum corellation: %.3fs',shift_samples,total_shift_s);
 
 % correct time-axis of TLS-measurements 
@@ -56,3 +56,35 @@ title('Observation plots (corrected)')
 xlabel('Time [s]')
 ylabel('Displacement [m]')
 hold off;
+
+% Accelerations
+acc_data = load('acceleration.txt');
+t_acc= acc_data(:,1);
+y_acc = acc_data(:,2);
+figure;
+hold on;
+plot(t_tls, y_tls, '.-')
+plot(t_ibis, y_ibis, '.-')
+plot(t_acc,y_acc,'-');
+legend('TLS','IBIS','ACC')
+hold off;
+
+[xcf_acc_ibis,lag_acc_ibis] = xcorr(y_ibis,y_acc);
+[max_acc_ibis,shift_acc_ibis] = max(abs(xcf_acc_ibis));
+
+range_corr = (lag_acc_ibis+1)/2
+
+shift_acc_ibis_corr = shift_acc_ibis-range_corr
+figure; 
+hold on;
+plot(lag_acc_ibis,xcf_acc_ibis);
+title(fprintf('The max corr occurs after a shift of: %.1f',shift_acc_ibis_corr));
+xlim([0 6000])
+
+
+figure;
+hold on;
+plot()
+
+
+
