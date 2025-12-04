@@ -149,7 +149,7 @@ hold on
 txt = sprintf('%.2e x + %.3f', a, b)
 
 h_line = plot(t, a*t+b, 'DisplayName', txt, 'Color', 'r', 'LineWidth', 2);
-legend(h_line, 'Location', 'best');
+legend(h_line, 'Location', 'best','FontSize',15);
 hold off 
 
 %--------------------------------------------------------------------------
@@ -164,3 +164,37 @@ ylabel('Acceleration [g]')
 hold on 
 
 
+%--------------------------------------------------------------------------
+%  Cross-corellation with parabolic de-trended values
+%--------------------------------------------------------------------------
+para = load('task3_1_data.txt');
+t_para = para(:,1);
+y_para = para(:,2);
+
+% cor = xcorr(y_new,y_para)
+% 
+% figure;
+% plot(cor);
+
+
+%--------------------------------------------------------------------------
+%  Other metrics
+%--------------------------------------------------------------------------
+
+
+rmse_val = sqrt(mean((y_new - y_para).^2));
+
+[c, lags] = xcorr(y_new, y_para, 'coeff');
+[max,idx] = max(c);
+
+% Display the statistics
+fprintf('Correlation Coefficient (should be 1 for bset case): %.15f\n', max);
+
+fprintf('Correlation Coefficient is max at position: %.1i\n', idx);
+fprintf('RMSE, better the closer to 0: %.15e\n', rmse_val);
+
+figure;
+plot(lags,c)
+xlabel("lags")
+ylabel("Cross-corelation value")
+title("Corss-corelation plot")
