@@ -1,0 +1,10 @@
+clc;clear all; close all;
+
+data = load('Exercise3-5.txt');
+
+data1 = load(xE')
+t= data(:,1);
+y = data(:,2);
+
+plot(t,y,'-')
+

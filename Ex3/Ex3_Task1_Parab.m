@@ -158,7 +158,7 @@ hold off
 %--------------------------------------------------------------------------
 figure;
 y_new = y - Psi;
-data_to_save = [t(:), y_new(:)];
+data_to_save = [t, y_new];
 writematrix(data_to_save, 'task3_1_data.txt', 'Delimiter', '\t'); % write to matrix to compute xcross
 
 plot(t, y_new, '.', Markersize=15)
