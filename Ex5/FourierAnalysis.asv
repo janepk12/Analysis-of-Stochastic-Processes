@@ -1,0 +1,44 @@
+%--------------------------------------------------------------------------
+%
+%   Function to calculate the Fast Fourier Spectrum of a Time Series
+%   
+%   Author:         Sven Weisbrich
+%   Created at:     30.01.2013
+%   Last Changes:   30.01.2013 
+%
+%--------------------------------------------------------------------------
+
+function spectrum = FourierAnalysis(Data,lowerF,upperF)
+
+%--------------------------------------------------------------------------
+%   Frequency Domain
+%--------------------------------------------------------------------------
+
+% Sampling frequency
+Fs =1/(Data(length(Data),1)-Data(1,1))*length(Data);
+
+% Set Frequency Limits in order to get the whole spectrum
+if lowerF==upperF
+    lowerF=0;
+    upperF=floor(Fs/2);
+end
+
+% Length of signal
+L = length(Data);                     
+NFFT=2^nextpow2(L);
+
+% Fourier Transformation
+Y=fft(Data(:,2),NFFT)/L;
+f=Fs/2*linspace(0,1,NFFT/2+1);
+
+% Cutting out the wanted part of the frequency spectrum
+lower=round((length(Y)/2+1)/Fs*2*lowerF)+1;
+upper=round((length(Y)/2+1)/Fs*2*upperF);
+
+spectrum(:,1)=f(lower:upper);
+spectrum(:,2)=2*abs(Y(lower:upper));
+spectrum(:,3)=angle(Y(lower:upper));
+
+
+end
+
